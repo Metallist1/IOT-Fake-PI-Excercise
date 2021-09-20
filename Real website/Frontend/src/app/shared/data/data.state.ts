@@ -26,26 +26,31 @@ export class DataState {
 
     dataService.setUpAllHumidity().subscribe(
       (data) => {
+        console.log(data);
         this.store.dispatch(new SetAllUpHumidity(data as Update[]));
       });
 
     dataService.setUpAllTemperature().subscribe(
       (data) => {
+        console.log(data);
         this.store.dispatch(new SetUpAllTemperature(data as Update[]));
       });
 
     dataService.setUpHumidity().subscribe(
       (data) => {
+        console.log(data);
         this.store.dispatch(new SetUpHumidity(data as Update));
       });
 
     dataService.setUpTemperature().subscribe(
       (data) => {
+        console.log(data);
         this.store.dispatch(new SetUpTemperature(data as Update));
       });
 
     dataService.setUpSettings().subscribe(
       (data) => {
+        console.log(data);
         this.store.dispatch(new SetUpSettings(data as Sensor));
       });
   }

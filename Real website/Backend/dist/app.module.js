@@ -10,11 +10,28 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
+const weatherdata_module_1 = require("./weatherdata/weatherdata.module");
+const typeorm_1 = require("@nestjs/typeorm");
+const temperature_entity_1 = require("./weatherdata/entities/temperature.entity");
+const humidity_entity_1 = require("./weatherdata/entities/humidity.entity");
+const settings_entity_1 = require("./weatherdata/entities/settings.entity");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [],
+        imports: [
+            typeorm_1.TypeOrmModule.forRoot({
+                type: 'mysql',
+                host: 'localhost',
+                port: 3306,
+                username: 'root',
+                password: 'root',
+                database: 'test',
+                entities: [temperature_entity_1.Temperature, humidity_entity_1.Humidity, settings_entity_1.Settings],
+                synchronize: true,
+            }),
+            weatherdata_module_1.WeatherdataModule
+        ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })
