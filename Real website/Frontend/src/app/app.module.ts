@@ -1,16 +1,36 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import {SocketIoConfig, SocketIoModule} from "ngx-socket-io";
+import {environment} from "../environments/environment";
+import {NgxsModule} from "@ngxs/store";
+import {DataState} from "./shared/data/data.state";
+import { HeaderComponent } from './nav/header/header.component';
+import { TemperatureChartComponent } from './temperature-chart/temperature-chart.component';
+import { HumidityChartComponent } from './humidity-chart/humidity-chart.component';
+import { SettingsComponent } from './settings/settings.component';
+import { MainComponent } from './main/main.component';
+
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent,
+    TemperatureChartComponent,
+    HumidityChartComponent,
+    SettingsComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgxsModule.forRoot([DataState], {
+      developmentMode: !environment.production
+    }),
+    SocketIoModule.forRoot(config)
   ],
   providers: [],
   bootstrap: [AppComponent]
