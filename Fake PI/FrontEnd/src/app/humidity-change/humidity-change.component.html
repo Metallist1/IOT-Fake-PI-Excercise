@@ -1,0 +1,18 @@
+<div class="login-form">
+  <form [formGroup]="humidityForm" (ngSubmit)="onSubmit()" class="login-form">
+    <div class="form-group">
+      <h2 class="text-center">Change Humidity</h2>
+      <div class="input-group">
+        <input type="text" formControlName="username" class="form-control" placeholder="Humidity value"  [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+          <div *ngIf="f.username.errors.required">Value is required</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-group">
+        <button [disabled]="loading" type="submit" class="btn btn-success btn-block login-btn">Change</button>
+      </div>
+    </div>
+  </form>
+</div>
