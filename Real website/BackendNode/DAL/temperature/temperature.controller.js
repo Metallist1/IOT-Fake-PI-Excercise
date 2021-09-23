@@ -26,7 +26,7 @@ exports.create = function(req, res) {
 };
 
 exports.findById = function(req, res) {
-    Temperature.findById(req.params.id, function(err, temperature) {
+    Temperature.findById(req, function(err, temperature) {
         if (err)
         res(err , null);
         res(null, temperature);

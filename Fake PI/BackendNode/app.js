@@ -70,7 +70,9 @@ client.on('error', function (error) {
 
 client.on('message', function (topic, message) {
     //Called each time a message is received
-    console.log('Received message:', topic, message.toString());
+    if(topic === 'setting/change'){
+        console.log('Received message:', topic, JSON.parse(message));
+    }
 });
 
 // subscribe to topic 'my/test/topic'

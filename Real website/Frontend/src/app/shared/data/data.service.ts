@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Socket} from 'ngx-socket-io';
+import {Sensor} from "./entities/sensor";
 
 @Injectable({
   providedIn: 'root',
@@ -26,5 +27,9 @@ export class DataService {
 
   setUpSettings(){
     return this.socket.fromEvent('new_settings');
+  }
+
+  changeSettings(settings: Sensor) {
+    this.socket.emit('change_settings', settings);
   }
 }

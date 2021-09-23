@@ -25,7 +25,7 @@ exports.create = function(req, res) {
 };
 
 exports.findById = function(req, res) {
-    Humidity.findById(req.params.id, function(err, humidity) {
+    Humidity.findById(req, function(err, humidity) {
         if (err)
         res(err, null);
         res(null, humidity);

@@ -1,6 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import { ChartConfiguration, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import {Select, Store} from "@ngxs/store";
+import {DataState} from "../shared/data/data.state";
+import {Observable} from "rxjs";
+import {Update} from "../shared/data/entities/update";
 
 @Component({
   selector: 'app-humidity-chart',
@@ -11,8 +15,8 @@ export class HumidityChartComponent implements OnInit {
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
       {
-        data: [ 65, 59, 80, 81, 56, 55, 40 ],
-        label: 'Series A',
+        data: [],
+        label: 'Humidity',
         backgroundColor: 'rgba(148,159,177,0.2)',
         borderColor: 'rgba(148,159,177,1)',
         pointBackgroundColor: 'rgba(148,159,177,1)',
@@ -22,7 +26,7 @@ export class HumidityChartComponent implements OnInit {
         fill: 'origin',
       }
     ],
-    labels: [ 'January', 'February', 'March', 'April', 'May', 'June', 'July' ]
+    labels: []
   };
 
   // @ts-ignore
@@ -81,31 +85,24 @@ export class HumidityChartComponent implements OnInit {
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
-  private static generateNumber(i: number): number {
-    return Math.floor((Math.random() * (i < 2 ? 100 : 1000)) + 1);
+
+  // @ts-ignore
+  @Select(DataState.getHumidity) allHumidity: Observable<Update[]>;
+  humidity: Update[] | undefined;
+
+  constructor(private store: Store) {
+    // @ts-ignore
+    this.allHumidity.subscribe((data) => {
+      this.lineChartData.datasets[0].data = [];
+      this.lineChartData.labels = [];
+      for (let i = 0; i < data.length; i++) {
+        this.lineChartData.datasets[0].data?.push(data[i].value);
+        this.lineChartData.labels?.push(data[i].measuretime);
+      }
+      this.chart?.update();
+    });
   }
 
-  public hideOne(): void {
-    const isHidden = this.chart?.isDatasetHidden(1);
-    this.chart?.hideDataset(1, !isHidden);
-  }
-
-  public changeColor(): void {
-    this.lineChartData.datasets[2].borderColor = 'green';
-    this.lineChartData.datasets[2].backgroundColor = `rgba(0, 255, 0, 0.3)`;
-
-    this.chart?.update();
-  }
-
-  public changeLabel(): void {
-    if (this.lineChartData.labels) {
-      this.lineChartData.labels[2] = [ '1st Line', '2nd Line' ];
-    }
-
-    this.chart?.update();
-  }
-  constructor() { }
-
-  ngOnInit() {
+  ngOnInit(): void {
   }
 }

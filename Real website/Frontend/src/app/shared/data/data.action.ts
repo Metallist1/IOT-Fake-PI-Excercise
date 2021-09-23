@@ -1,6 +1,14 @@
 import {Sensor} from './entities/sensor';
 import {Update} from './entities/update';
 
+export class ChangeSettings {
+  static readonly type = '[Auth] ChangeSettings';
+  constructor(
+    public settings: Sensor
+  ) {}
+}
+
+
 export class SetUpSettings {
   static readonly type = '[Auth] SetUpSettings';
   constructor(

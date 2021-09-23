@@ -3,7 +3,14 @@ import {DataService} from './data.service';
 import {Action, Selector, State, StateContext, Store} from '@ngxs/store';
 import {Sensor} from './entities/sensor';
 import {Update} from './entities/update';
-import {SetAllUpHumidity, SetUpAllTemperature, SetUpHumidity, SetUpSettings, SetUpTemperature} from "./data.action";
+import {
+  ChangeSettings,
+  SetAllUpHumidity,
+  SetUpAllTemperature,
+  SetUpHumidity,
+  SetUpSettings,
+  SetUpTemperature
+} from "./data.action";
 
 export class DataStateModel {
   settings: Sensor | undefined ;
@@ -26,31 +33,26 @@ export class DataState {
 
     dataService.setUpAllHumidity().subscribe(
       (data) => {
-        console.log(data);
         this.store.dispatch(new SetAllUpHumidity(data as Update[]));
       });
 
     dataService.setUpAllTemperature().subscribe(
       (data) => {
-        console.log(data);
         this.store.dispatch(new SetUpAllTemperature(data as Update[]));
       });
 
     dataService.setUpHumidity().subscribe(
       (data) => {
-        console.log(data);
         this.store.dispatch(new SetUpHumidity(data as Update));
       });
 
     dataService.setUpTemperature().subscribe(
       (data) => {
-        console.log(data);
         this.store.dispatch(new SetUpTemperature(data as Update));
       });
 
     dataService.setUpSettings().subscribe(
       (data) => {
-        console.log(data);
         this.store.dispatch(new SetUpSettings(data as Sensor));
       });
   }
@@ -68,6 +70,13 @@ export class DataState {
   static getSettings(state: DataStateModel): any {
     return state.settings;
   }
+
+  @Action(ChangeSettings)
+  changeSettings({getState, setState}: StateContext<DataStateModel>,
+                { settings }: ChangeSettings): any {
+    this.dataService.changeSettings(settings);
+  }
+
 
   @Action(SetAllUpHumidity)
   setUpMessages({getState, setState}: StateContext<DataStateModel>,

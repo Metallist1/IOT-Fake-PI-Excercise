@@ -13,6 +13,7 @@ import { HumidityChartComponent } from './humidity-chart/humidity-chart.componen
 import { SettingsComponent } from './settings/settings.component';
 import { MainComponent } from './main/main.component';
 import { NgChartsModule } from 'ng2-charts';
+import {ReactiveFormsModule} from "@angular/forms";
 
 const config: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
 
@@ -25,15 +26,16 @@ const config: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
     SettingsComponent,
     MainComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    NgxsModule.forRoot([DataState], {
-      developmentMode: !environment.production
-    }),
-    SocketIoModule.forRoot(config),
-    NgChartsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        NgxsModule.forRoot([DataState], {
+            developmentMode: !environment.production
+        }),
+        SocketIoModule.forRoot(config),
+        NgChartsModule,
+        ReactiveFormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

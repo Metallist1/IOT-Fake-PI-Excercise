@@ -39,7 +39,6 @@ Temperature.findAll = function (result) {
         result(err, null);
     }
     else{
-        console.log('temperature : ', res);
         result(null, res);
     }
     });

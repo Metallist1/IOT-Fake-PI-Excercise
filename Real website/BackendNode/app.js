@@ -16,6 +16,8 @@ var client = mqtt.connect(options);
 const humidityController =   require('./DAL/humidity/humidity.controller');
 const temperatureController =   require('./DAL/temperature/temperature.controller');
 
+const settingsController =   require('./DAL/settings/settings.controller');
+
 // Express
 
 const app = require('express')();
@@ -77,26 +79,22 @@ client.on('message', function (topic, message) {
     console.log('Received message:', topic, message.toString());
 
     if(topic === 'temperature/change'){
-        console.log("Temperature");
         temperatureController.create(JSON.parse(message), function(err, temper) {
             if (err){
                 console.log(err);
             }
             else{
-                console.log({error:false,message:"Temperature added successfully!",data:temper});
                 io.emit("new_temperature", JSON.parse(message));
             }
         });
     }
 
     if(topic === 'humidity/change'){
-        console.log("Humidity");
         humidityController.create(JSON.parse(message), function(err, humid) {
             if (err){
                 console.log(err);
             }
             else{
-                console.log({error:false,message:"Humidity added successfully!",data:humid});
                 io.emit("new_humidity", JSON.parse(message));
             }
         });
@@ -129,6 +127,28 @@ io.on("connection", function (socket) {
         else{
             socket.emit("get_all_humidity", humidityAll);
         }
+    });
+    
+    settingsController.findById('1A', function(err, botSettings) {
+        if (err){
+            console.log(err);
+        }
+        else{
+            
+            client.publish('setting/change', JSON.stringify(botSettings));
+            socket.emit("new_settings", botSettings);
+        }
+    });
+
+    socket.on('change_settings', (settings) => {
+        settingsController.update(settings,function(err, botSettings) {
+            if (err){
+                console.log(err);
+            }
+            else{
+                socket.emit("new_settings", botSettings);
+            }
+        });
     });
 
     socket.on("disconnect", () => {
