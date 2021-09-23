@@ -14,7 +14,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { MainComponent } from './main/main.component';
 import { NgChartsModule } from 'ng2-charts';
 
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+const config: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
 
 @NgModule({
   declarations: [
