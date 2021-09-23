@@ -11,6 +11,8 @@ var options = {
 
 var client = mqtt.connect(options);
 
+//APP
+var cors = require('cors');
 const app = require('express')();
 const bodyParser = require('body-parser');
 
@@ -18,18 +20,28 @@ const http = require('http');
 const server = http.createServer(app);
 
 
+const settingsController =   require('./filestorage/internalstorage');
 // Middleware
 app.use(bodyParser.json());
-
+app.use(cors({
+    origin: '*',
+    methods: ["GET", "POST"]
+}));
 
 app.get('/settings', function (req, res) {
-    client.publish('setting/change', 'Hello');
-    res.send("ToDO");
+    settingsController.getCurrentSettings(null, function(err, botSettings) {
+        if (err){
+            console.log(err);
+        }
+        else{
+            res.send(botSettings);
+        }
+    });
 });
 
 app.post('/temperature', function (req, res) {
     let change = req.body;
-
+    console.log('Humidity' + change);
     let id = change.id;
     let value = change.value;
     let time = change.time;
@@ -40,7 +52,7 @@ app.post('/temperature', function (req, res) {
 
 app.post('/humidity', function (req, res) {
     let change = req.body;
-
+    console.log('Humidity' + change);
     let id = change.id;
     let value = change.value;
     let time = change.time;
@@ -72,6 +84,14 @@ client.on('message', function (topic, message) {
     //Called each time a message is received
     if(topic === 'setting/change'){
         console.log('Received message:', topic, JSON.parse(message));
+        settingsController.updateCurrentSettings(JSON.parse(message), function(err, botSettings) {
+            if (err){
+                console.log(err);
+            }
+            else{
+                console.log(botSettings);
+            }
+        });
     }
 });
 

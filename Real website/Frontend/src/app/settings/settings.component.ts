@@ -34,12 +34,16 @@ export class SettingsComponent implements OnInit {
     this.settingsForSensor.subscribe((data) => {
       if(data){
         // @ts-ignore
-        this.loginForm.patchValue({
-          // @ts-ignore
-          sentInterval: data[0].sendInterval,
-          // @ts-ignore
-          readInterval: data[0].readInterval
-        });
+        console.log(data)
+        // @ts-ignore
+        if(data[0]) {
+          this.loginForm.patchValue({
+            // @ts-ignore
+            sentInterval: data[0].sendInterval,
+            // @ts-ignore
+            readInterval: data[0].readInterval
+          });
+        }
       }
     });
   }

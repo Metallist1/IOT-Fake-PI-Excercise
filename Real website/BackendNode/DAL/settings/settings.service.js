@@ -50,7 +50,7 @@ Settings.update = function(id, settingsToUpdate, result){
             console.log("error: ", err);
             result(null, err);
         }else{
-            result(null, res);
+            result(null, settingsToUpdate);
         }
     });
 };

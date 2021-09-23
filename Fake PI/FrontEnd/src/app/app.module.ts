@@ -7,7 +7,7 @@ import { TemperatureChangeComponent } from './temperature-change/temperature-cha
 import { HumidityChangeComponent } from './humidity-change/humidity-change.component';
 import { SettingsChangeComponent } from './settings-change/settings-change.component';
 import {ReactiveFormsModule} from "@angular/forms";
-
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +18,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     imports: [
         BrowserModule,
         AppRoutingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+      HttpClientModule
     ],
   providers: [],
   bootstrap: [AppComponent]

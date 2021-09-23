@@ -3,9 +3,9 @@
     <div class="form-group">
       <h2 class="text-center">Change temperature</h2>
       <div class="input-group">
-        <input type="text" formControlName="username" class="form-control" placeholder="Temperature value"  [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
-        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-          <div *ngIf="f.username.errors.required">Value is required</div>
+        <input type="text" formControlName="temperature" class="form-control" placeholder="Temperature value"  [ngClass]="{ 'is-invalid': submitted && f.temperature.errors }" />
+        <div *ngIf="submitted && f.temperature.errors" class="invalid-feedback">
+          <div *ngIf="f.temperature.errors.required">Value is required</div>
         </div>
       </div>
     </div>

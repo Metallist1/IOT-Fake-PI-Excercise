@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FakePIService} from "../shared/fakePI.service";
 
 @Component({
   selector: 'app-temperature-change',
@@ -15,6 +16,7 @@ export class TemperatureChangeComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private fakePIService: FakePIService
   ) {
   }
 
@@ -35,13 +37,19 @@ export class TemperatureChangeComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
+
+    this.fakePIService.newTemperature({
+      value:this.loginForm.value.temperature,
+      time: Date.now(),
+      id: '1A'
+    }).subscribe(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.log(error);
+      });
   }
 
-  loginUsingGoogle() {
-
-  }
-  loginUsingFacebook() {
-
-  }
 
 }

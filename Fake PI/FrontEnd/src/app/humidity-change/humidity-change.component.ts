@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FakePIService} from "../shared/fakePI.service";
 
 @Component({
   selector: 'app-humidity-change',
@@ -14,12 +15,13 @@ export class HumidityChangeComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private fakePIService: FakePIService
   ) {
   }
 
   ngOnInit() {
     this.humidityForm = this.formBuilder.group({
-      temperature: ['', Validators.required]
+      humidity: ['', Validators.required]
     });
 
   }
@@ -29,11 +31,22 @@ export class HumidityChangeComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
     // stop here if form is invalid
     if (this.humidityForm.invalid) {
       return;
     }
+
+    this.fakePIService.newHumidity({
+      value:this.humidityForm.value.humidity,
+      time: Date.now(),
+      id: '1A'
+    }).subscribe(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.log(error);
+      });
   }
 
   loginUsingGoogle() {
