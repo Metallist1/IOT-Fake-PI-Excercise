@@ -1,3 +1,4 @@
+const PORT = process.env.PORT || 3000;
 // MQTT 
 var mqtt = require('mqtt');
 
@@ -60,11 +61,11 @@ app.post('/humidity', function (req, res) {
     res.send({sensorId: id, value: value, measuretime: time});
 });
 
-server.listen(3000, function (err) {
+server.listen(PORT, function (err) {
     if (err) {
         console.error(err);
     } else {
-        console.info("Listening on port %s.", 3000);
+        console.info(`Server is running on port ${PORT}.`);
     }
 });
 

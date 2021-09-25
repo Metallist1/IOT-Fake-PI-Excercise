@@ -26,6 +26,7 @@ const bodyParser = require('body-parser');
 const http = require('http');
 const server = http.createServer(app);
 
+const PORT = process.env.PORT || 3000;
 //Sockets
 
 const io = require("socket.io")(server, {
@@ -53,12 +54,11 @@ app.post('/settings', function (req, res) {
     res.send({sensorId: id, value: value, measuretime: time});
 });
 
-
-server.listen(3001, function (err) {
+server.listen(PORT, function (err) {
     if (err) {
         console.error(err);
     } else {
-        console.info("Listening on port %s.", 3001);
+        console.info(`Server is running on port ${PORT}.`);
     }
 });
 

@@ -63,7 +63,7 @@ export class SettingsComponent implements OnInit {
     }
 
     const settings = {
-      readInterval:this.loginForm.value.readInterval,
+      readInterval: this.loginForm.value.readInterval,
       sendInterval: this.loginForm.value.sentInterval,
       sensorId: '1A'
     } as Sensor;

@@ -15,7 +15,7 @@ import { MainComponent } from './main/main.component';
 import { NgChartsModule } from 'ng2-charts';
 import {ReactiveFormsModule} from "@angular/forms";
 
-const config: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
+const config: SocketIoConfig = { url: 'https://realwebsite-nodejs-mysql.herokuapp.com', options: {} };
 
 @NgModule({
   declarations: [
