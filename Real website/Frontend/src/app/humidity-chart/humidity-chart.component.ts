@@ -39,20 +39,7 @@ export class HumidityChartComponent implements OnInit {
     },
     scales: {
       // We use this empty structure as a placeholder for dynamic theming.
-      x: {},
-      'y-axis-0':
-        {
-          position: 'left',
-        },
-      'y-axis-1': {
-        position: 'right',
-        grid: {
-          color: 'rgba(255,0,0,0.3)',
-        },
-        ticks: {
-          color: 'red'
-        }
-      }
+      x: {}
     },
 
     plugins: {
@@ -97,7 +84,9 @@ export class HumidityChartComponent implements OnInit {
       this.lineChartData.labels = [];
       for (let i = 0; i < data.length; i++) {
         this.lineChartData.datasets[0].data?.push(data[i].value);
-        this.lineChartData.labels?.push(data[i].measuretime);
+        var d = new Date(parseInt(data[i].measuretime, 10));
+        var ds = d.toLocaleString();
+        this.lineChartData.labels?.push(ds);
       }
       this.chart?.update();
     });
